@@ -125,8 +125,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## ✨ Contributors
 
-Thanks goes to these incredible people:
+<!-- Thanks goes to these incredible people: -->
 
-<a href="https://github.com/tembo-io/pgmq/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=tembo-io/pgmq" />
+<a href="https://github.com/tavallaie/safarnama/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=tavallaie/safarnama" />
 </a>

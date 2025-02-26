@@ -1,6 +1,6 @@
 [project]
 name = "Safarnama"
-version = "0.1.0"
+version = "0.1.1"
 description = "Safarnama is a versatile web crawler that explores websites, cleans HTML, and uses a language model to generate summaries and tags—writing its own digital story. Use it via CLI or in Python projects."
 readme = "README.md"
 license = {text = "MIT License"}

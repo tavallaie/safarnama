@@ -43,13 +43,13 @@ Running the tool without any arguments will automatically display the help messa
 ## Sample Configuration File (`config.yaml`)
 
 ```yaml
-base_url: "https://www.python.org"
+base_url: "https://www.techbend.io"
 max_depth: 2
 delay: 1
-db_path: "python.db"
+db_path: "techbend.db"
 verbose: true
 save: true
-log_file: "python.log"
+log_file: "techbend.log"
 generate_sitemap: true
 binary_extensions:
   - ".pdf"

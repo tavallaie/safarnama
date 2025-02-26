@@ -1,0 +1,24 @@
+[project]
+name = "Safarnama"
+version = "0.1.0"
+description = "Safarnama is a versatile web crawler that explores websites, cleans HTML, and uses a language model to generate summaries and tags—writing its own digital story. Use it via CLI or in Python projects."
+readme = "README.md"
+license = {text = "MIT License"}
+authors = [
+    { name = "Ali Tavallaie", email = "a.tavallaie@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "bs4>=0.0.2",
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "pyyaml>=6.0.2",
+    "typer>=0.15.1",
+]
+
+[project.scripts]
+safarnameh = "Safarnama.main:run"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

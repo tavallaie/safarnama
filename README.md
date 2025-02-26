@@ -87,7 +87,7 @@ llm:
 Safarnama is not only a command-line tool but can also be used programmatically in your Python projects. Below is an example of how to integrate its crawling capabilities:
 
 ```python
-from safarnama.main import load_config, SiteCrawler
+from safarnama import load_config, SiteCrawler
 
 # Load configuration from the YAML file
 config = load_config("config.yaml")

@@ -1,0 +1,46 @@
+base_url: "https://www.techbend.io"
+max_depth: 2
+delay: 1
+db_path: "python.db"
+verbose: true
+save: true
+log_file: "techbend.log"
+generate_sitemap: true
+recursive_crawl: true
+download_binaries: false
+download_specific_binaries: []
+find_images: false
+respect_robots: true
+exclude_url_patterns: []
+exclude_content_patterns: []
+depth_settings: {}
+url_settings: {}
+binary_extensions:
+  - ".pdf"
+  - ".zip"
+  - ".exe"
+  - ".tar"
+  - ".tar.gz"
+  - ".tgz"
+  - ".rar"
+  - ".iso"
+  - ".bin"
+  - ".7z"
+  - ".dmg"
+  - ".tar.xz"
+  - ".pkg"
+  - ".bz2"
+accepted_content_types:
+  - "text/html"
+  - "application/xhtml+xml"
+  - "text/plain"
+  - "text/xml"
+  - "application/xml"
+  - "application/json"
+llm:
+  endpoint: "http://localhost:1234/v1/chat/completions"
+  model: "jinaai.readerlm-v2@q4_k_m"
+  max_tokens: 16529
+  temperature: 0.7
+  llm_prompt_template: "Please summarize the following webpage content and extract a list of relevant tags. Return your answer as JSON with keys 'summary' and 'tags'."
+  system_prompt: "You are a helpful assistant that summarizes webpages and extracts tags."

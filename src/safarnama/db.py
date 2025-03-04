@@ -1,15 +1,17 @@
-from datetime import datetime
+from datetime import datetime, timedelta  # Fixed: import timedelta from datetime
 from sqlalchemy import create_engine, Column, String, Integer, Text, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from loguru import logger
 from typing import List
-from time import timedelta
 
 Base = declarative_base()
 
 
+# ------------------------------
+# URL Model for the Crawler
+# ------------------------------
 class URL(Base):
     __tablename__ = "urls"
     url = Column(String, primary_key=True)
@@ -20,6 +22,9 @@ class URL(Base):
     tags = Column(Text)
 
 
+# ------------------------------
+# Instance Model for Searcher
+# ------------------------------
 class Instance(Base):
     __tablename__ = "instances"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -40,6 +45,9 @@ class Instance(Base):
     sleep_until = Column(DateTime)
 
 
+# ------------------------------
+# Unified Database Handler
+# ------------------------------
 class DBHandler:
     def __init__(self, connection_string: str):
         self.engine = create_engine(connection_string)
@@ -111,7 +119,6 @@ class DBHandler:
         session = self.Session()
         try:
             record = session.query(Instance).filter_by(url=url).first()
-            # Map instance fields from JSON.
             version = instance.get("version")
             tls = instance.get("tls", {}).get("grade")
             csp = instance.get("http", {}).get("grade")
@@ -243,5 +250,4 @@ class DBHandler:
             session.close()
 
     def close(self):
-        # No persistent session to close.
         pass

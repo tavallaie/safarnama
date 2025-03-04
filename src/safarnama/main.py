@@ -6,6 +6,8 @@ from loguru import logger
 from safarnama.config import load_config, update_env, CONFIG_FILE, DEFAULT_CONFIG
 from safarnama.crawler import SiteCrawler
 from safarnama.logger_setup import setup_logger
+from safarnama.searcher import SearxNGSearcher
+from safarnama.db import DBHandler
 
 app = typer.Typer()
 
@@ -198,6 +200,38 @@ def start(
     else:
         logger.info("Sitemap generation is disabled by configuration.")
     crawler.close()
+
+
+@app.command()
+def search(
+    query: str,
+    config_file: str = typer.Option(
+        CONFIG_FILE, help="Path to configuration YAML file"
+    ),
+):
+    """
+    Search for a query using SearxNG instances and process the resulting links with the crawler.
+    """
+
+    config = load_config(config_file)
+    db = DBHandler(config.get("connection_string", "sqlite:///python.db"))
+    searcher = SearxNGSearcher(db, retries=2)
+    result = searcher.search(query)
+    if result:
+        instance_used, data = result
+        # Assume search JSON contains a "results" field with link dictionaries.
+        links = [item["url"] for item in data.get("results", []) if "url" in item]
+        typer.echo(f"Found {len(links)} links. Processing with crawler...")
+        crawler = SiteCrawler(config)
+        for link in links:
+            crawler.add_url(link, 0)
+        visited = crawler.crawl()
+        typer.echo(f"Crawled {len(visited)} URLs from search results.")
+        crawler.close()
+    else:
+        typer.echo("No healthy instance available to perform the search.")
+    searcher.close()
+    db.close()
 
 
 @app.command()

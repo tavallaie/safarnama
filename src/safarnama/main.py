@@ -212,7 +212,6 @@ def search(
     """
     Search for a query using SearxNG instances and process the resulting links with the crawler.
     """
-
     config = load_config(config_file)
     db = DBHandler(config.get("connection_string", "sqlite:///python.db"))
     searcher = SearxNGSearcher(db, retries=2)

@@ -1,13 +1,11 @@
 import unittest
-from datetime import datetime, timedelta
 from unittest.mock import patch, MagicMock
 
-import httpx
 
 from safarnama.searcher import SearxNGSearcher
 
 
-# Dummy DBHandler to simulate instance records for searcher tests.
+# Dummy DBHandler to simulate instance records for testing
 class DummyDBHandler:
     class DummyInstance:
         def __init__(self, url, priority):
@@ -15,7 +13,6 @@ class DummyDBHandler:
             self.priority = priority
 
     def get_available_instances(self):
-        # Return a single dummy instance record.
         return [self.DummyInstance("http://fake-instance", 10)]
 
     def update_all_priorities(self):
@@ -34,12 +31,11 @@ class DummyDBHandler:
 class TestSearxNGSearcher(unittest.TestCase):
     def setUp(self):
         self.db = DummyDBHandler()
-        # Set timeout low and retries 0 for tests.
         self.searcher = SearxNGSearcher(self.db, timeout=5, retries=0)
 
     @patch("httpx.Client.get")
     def test_check_instance_health_success(self, mock_get):
-        # Fake healthy response.
+        # Simulate a healthy instance response
         fake_response = MagicMock()
         fake_response.status_code = 200
         fake_response.json.return_value = {"dummy": "data"}
@@ -54,7 +50,7 @@ class TestSearxNGSearcher(unittest.TestCase):
 
     @patch("httpx.Client.get")
     def test_perform_search_success(self, mock_get):
-        # Fake successful search response with JSON.
+        # Simulate a successful search response with two results
         fake_response = MagicMock()
         fake_response.status_code = 200
         fake_response.json.return_value = {
@@ -70,10 +66,10 @@ class TestSearxNGSearcher(unittest.TestCase):
 
     @patch("safarnama.searcher.SearxNGSearcher.check_instance_health")
     @patch("safarnama.searcher.SearxNGSearcher.perform_search")
-    def test_search_overall_success(self, mock_search, mock_health):
-        # Setup dummy health and search responses.
-        mock_health.return_value = (True, "healthy")
-        mock_search.return_value = {
+    def test_search_overall_success(self, mock_perform_search, mock_check_health):
+        # Simulate a scenario where the instance is healthy and returns two search results
+        mock_check_health.return_value = (True, "healthy")
+        mock_perform_search.return_value = {
             "results": [{"url": "http://link1"}, {"url": "http://link2"}]
         }
 

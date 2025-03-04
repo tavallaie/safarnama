@@ -74,6 +74,27 @@ def load_dotenv(env_file: str = ENV_FILE) -> None:
                     os.environ.setdefault(key.strip(), value.strip())
 
 
+def update_env(key: str, value: str, env_file: str = ENV_FILE) -> None:
+    """
+    Update or add a key/value pair in the .env file and set it in os.environ.
+    """
+    env_vars = {}
+    if os.path.exists(env_file):
+        with open(env_file, "r") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if "=" in line:
+                    k, v = line.split("=", 1)
+                    env_vars[k.strip()] = v.strip()
+    env_vars[key] = value
+    with open(env_file, "w") as f:
+        for k, v in env_vars.items():
+            f.write(f"{k}={v}\n")
+    os.environ[key] = value
+
+
 def load_config(config_file: str = CONFIG_FILE) -> dict:
     load_dotenv()
     config = {}

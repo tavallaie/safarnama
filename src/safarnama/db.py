@@ -2,7 +2,6 @@ from sqlalchemy import create_engine, Column, String, Integer, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.types import TypeDecorator, TEXT
 from loguru import logger
 
 Base = declarative_base()

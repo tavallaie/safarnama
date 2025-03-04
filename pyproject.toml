@@ -13,6 +13,7 @@ dependencies = [
     "httpx>=0.28.1",
     "loguru>=0.7.3",
     "pyyaml>=6.0.2",
+    "sqlalchemy>=2.0.38",
     "typer>=0.15.1",
 ]
 
